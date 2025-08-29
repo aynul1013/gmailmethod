@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gmail অ্যাকাউন্ট তৈরি করুন</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #4285f4, #34a853);
+            padding: 25px;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+        
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background: #34a853;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70px;
+            height: 70px;
+            background: #e6f4ea;
+            border-radius: 50%;
+            z-index: 0;
+        }
+        
+        .logo {
+            font-size: 40px;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 35px 30px;
+            position: relative;
+        }
+        
+        .message-box {
+            border: 2px dashed #34a853;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+            background-color: #f9f9f9;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .message-box.error {
+            border-color: #ea4335;
+            background-color: #ffebee;
+        }
+        
+        .message-box.success {
+            border-color: #34a853;
+            background-color: #e6f4ea;
+        }
+        
+        .message-box p {
+            font-size: 17px;
+            margin-bottom: 12px;
+            line-height: 1.5;
+            color: #333;
+        }
+        
+        .emoji {
+            font-size: 28px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, #4285f4, #34a853);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(to right, #fbbc05, #ea4335);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .password-form {
+            display: none;
+            margin-top: 25px;
+            animation: slideDown 0.5s ease;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #444;
+            font-size: 17px;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 16px 16px 16px 50px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 17px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: #4285f4;
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
+        }
+        
+        .form-group i {
+            position: absolute;
+            left: 15px;
+            top: 50px;
+            font-size: 20px;
+            color: #777;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #f5f5f5;
+            border-top: 1px solid #eee;
+            font-size: 15px;
+            color: #555;
+            border-radius: 0 0 20px 20px;
+        }
+        
+        .highlight {
+            color: #4285f4;
+            font-weight: 600;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            .content {
+                padding: 25px 20px;
+            }
+            
+            .btn {
+                padding: 14px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="logo"><i class="fab fa-google"></i></span>
+            <h1>Gmail অ্যাকাউন্ট তৈরি করুন</h1>
+            <p>দ্রুত এবং সহজে Gmail অ্যাকাউন্ট তৈরি করুন</p>
+        </div>
+        
+        <div class="content">
+            <div id="initialMessage" class="message-box success">
+                <p><span class="emoji">📧</span> জিমেল তৈরি করতে নিচের Gmail Create বাটনে ক্লিক করুন!</p>
+            </div>
+            
+            <div id="passwordMessage" class="message-box success" style="display: none;">
+                <p><span class="emoji">🔒</span> অনুগ্রহ করে সঠিক পাসওয়ার্ড দিন, তারপর জিমেল create page যেতে পারবেন</p>
+                <p><span class="emoji">ℹ️</span> পাসওয়ার্ড নিতে নিচের contact বাটন এ ক্লিক করুন</p>
+            </div>
+            
+            <div id="errorMessage" class="message-box error" style="display: none;">
+                <p><span class="emoji">❌</span> আপনার পাসওয়ার্ডটি সঠিক নয়</p>
+                <p><span class="emoji">📞</span> নিচের contact বাটন ক্লিক করে যোগাযোগ করুন</p>
+            </div>
+            
+            <button id="createBtn" class="btn btn-primary">
+                <i class="fas fa-envelope"></i> Gmail Create
+            </button>
+            
+            <a id="contactBtn" href="https://t.me/developeronik" target="_blank" class="btn btn-secondary">
+                <i class="fas fa-headset"></i> Contact
+            </a>
+            
+            <div id="passwordForm" class="password-form">
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-key"></i> পাসওয়ার্ড</label>
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="পাসওয়ার্ড দিন">
+                </div>
+                <button id="submitBtn" class="btn btn-primary">
+                    <i class="fas fa-paper-plane"></i> Submit
+                </button>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>Gmail হল <span class="highlight">Google</span>-এর একটি সেবা | সাহায্যের প্রয়োজন হলে <span class="highlight">Contact</span> বাটনে ক্লিক করুন</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const initialMessage = document.getElementById('initialMessage');
+            const passwordMessage = document.getElementById('passwordMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const createBtn = document.getElementById('createBtn');
+            const contactBtn = document.getElementById('contactBtn');
+            const passwordForm = document.getElementById('passwordForm');
+            const passwordInput = document.getElementById('password');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            // Show initial message
+            initialMessage.style.display = 'block';
+            
+            // Create button click event
+            createBtn.addEventListener('click', function() {
+                initialMessage.style.display = 'none';
+                passwordMessage.style.display = 'block';
+                passwordForm.style.display = 'block';
+                errorMessage.style.display = 'none';
+                
+                // Add animation to form
+                passwordForm.style.animation = 'none';
+                setTimeout(() => {
+                    passwordForm.style.animation = 'slideDown 0.5s ease';
+                }, 10);
+            });
+            
+            // Submit button click event
+            submitBtn.addEventListener('click', function() {
+                if (passwordInput.value === 'paidmetho88') {
+                    // Correct password - redirect to Gmail
+                    window.location.href = 'https://accounts.google.com/lifecycle/steps/signup/name?continue=http://support.google.com/mail/answer/56256?hl%3Den&dsh=S-249807764:1756458107844360&ec=GAZAdQ&flowEntry=SignUp&flowName=GlifWebSignIn&hl=en&ifkv=AdBytiNmvd-5HqEkUGTgS-30QE4g4TykB3FwGgDMABOptslySXfHfoXqs3Yi7v1OEbLayyQt7ygsUw&TL=ALgCv6zM-3UUi0sR58N0JrKGl9ydLMWOh7gAaGjcQH-QUqcONNLU69g2eQHik5JF';
+                } else {
+                    // Incorrect password - show error
+                    passwordMessage.style.display = 'none';
+                    errorMessage.style.display = 'block';
+                    
+                    // Add shake animation to form
+                    passwordForm.classList.add('shake');
+                    setTimeout(() => {
+                        passwordForm.classList.remove('shake');
+                    }, 500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
